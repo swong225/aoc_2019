@@ -43,9 +43,17 @@ w1=walk(input1)
 w2=walk(input2)
 crosses = w1.filter(values => w2.includes(values));
 
-results = crosses.map(coords => coords.split(',').reduce((a,b) => Math.abs(parseInt(a)) + Math.abs(parseInt(b)), 0));
-min = Math.min.apply(null, results)
+distances = [];
 
-console.log("min = ", min)
+// location in array is number of steps to get to the intersection. Calculate the total distance for each cross point.
+// +1 is needed since array is 0 based (the first entry in the array is already 1 step from the origin)
+crosses.forEach(cross => {
+  crossw1 = w1.indexOf(cross) + 1;
+  crossw2 = w2.indexOf(cross) + 1;
 
-//806
+  distances.push(crossw1 + crossw2);
+});
+
+console.log(Math.min(...distances));
+
+//66076
